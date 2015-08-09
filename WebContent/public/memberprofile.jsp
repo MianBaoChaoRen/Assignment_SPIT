@@ -107,12 +107,10 @@
                 <p class="lead">Update Profile</p>
             </div>
 
-            <div class="col-md-9">
-			
-			insert content here 
+            <div class="col	md-9">
 			
 			<%
-				String updateprofilesql="select * from member where email = '"+userdetails[3]+"'";
+				String updateprofilesql="select * from member where email = '"+userdetails[2]+"'";
             		
 				ResultSet profilers= stmt.executeQuery(updateprofilesql);
 			%>
