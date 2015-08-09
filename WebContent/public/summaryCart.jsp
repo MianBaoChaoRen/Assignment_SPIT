@@ -46,6 +46,7 @@
 </head>
 
 <body>
+	<form action="EraseCartServlet" id="doneForm"></form>
 	<%
 	String [] userdetails = (String []) session.getAttribute("userdetails");
 	String creditcard = String.valueOf(session.getAttribute("creditcard"));
@@ -68,7 +69,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.jsp">SP IT! TM</a>
+				<a class="navbar-brand"><button form = "doneForm" style = "border: none;background: none;">SP IT! TM</button></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -120,7 +121,7 @@
 					c.setCount(i);
 					i++;
 		%>
-		<form action="UpdateCartServlet" id="uForm"></form>
+		
 
 		<div class="product">
 			<div class="product-image"></div>
@@ -191,6 +192,9 @@
 					<%=creditcard %>
 				</div>
 			</div>
+
+			<button class="back" form="doneForm">Done</button>
+		
 		</div>
 
 	</div>

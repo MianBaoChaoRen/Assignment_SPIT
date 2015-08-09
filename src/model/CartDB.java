@@ -114,4 +114,66 @@ public class CartDB {
 			return 0;
 		}
 	}
+	
+	public int getStock(String productId){
+		try{
+			int stock = 0;
+			
+			Connection conn = connDB.getConnectionDB();
+			
+			String getStock = "Select quantity from product where ProductID = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(getStock);
+			
+			pstmt.setString(1, productId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				stock = rs.getInt("quantity");
+			}
+			return stock;
+		}catch(Exception e){
+			System.out.println(e);
+			return 0;
+		}
+	}
+	
+	public void updateStock(ArrayList<Cart> al){
+		try{
+			int oldstock = 0;
+			int newstock = 0;
+			int productID = 0;
+			
+			Connection conn = connDB.getConnectionDB();
+			
+			String getStock = "Select quantity from product where ProductID = ?";			
+			String updateStock = "Update product SET quantity = ? WHERE productID = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(getStock);
+			PreparedStatement pstmt2 = conn.prepareStatement(updateStock);
+			
+			for(Cart c: al){
+				productID = c.getProductID();
+				pstmt.setInt(1, productID);
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					oldstock = rs.getInt("quantity");
+				}
+				
+				newstock = oldstock - c.getQuantity();
+				pstmt2.setInt(1, newstock);
+				pstmt2.setInt(2, productID);
+				
+				
+				pstmt2.executeUpdate();
+				
+			}
+			
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+	}
 }

@@ -47,6 +47,7 @@ public class BuyCartServlet extends HttpServlet {
 		String cvc = request.getParameter("cvc");
 		
 		String orderid = String.valueOf(db.recordCart(name, contact, email, address, creditcard, cardtype, exmonth, exyear, cvc, al));
+		db.updateStock(al);
 		session.setAttribute("orderid", orderid);
 		session.setAttribute("creditcard", creditcard);
 		response.sendRedirect("summaryCart.jsp");

@@ -48,6 +48,7 @@
 <body>
 	<%
 		String [] userdetails = (String []) session.getAttribute("userdetails");
+		
 		try{
 			
 		    if (userdetails == null){
@@ -109,26 +110,15 @@
 		</div>		
 		<%
 			ArrayList<Cart> al = (ArrayList<Cart>) session.getAttribute("cart");
-			
-			if (al != null) {
-				for(Cart c: al){
-					%>
-					<form action="ViewCartServlet" id="vForm">
-					<input type="hidden" name="productNo" value="<%=c.getProductID()%>">
-					</form>
-					
-					<form action="RemoveCartServlet" id="rForm">
-						<input type="hidden" name="arrayNo" value="<%=c.getCount()%>">
-					</form>
-					<%
-				}
-				
-				
+	
 			%><form action = "DetailsCartServlet" id = "dForm"><%
 				int i = 0;
-				for (Cart c : al) {
+				
+				
+				if(al != null){
+					String [] stock = (String [])session.getAttribute("stock");
+				for (Cart c : al) {		
 					c.setCount(i);
-					
 		%>
 
 			
@@ -150,24 +140,41 @@
 				</div>
 
 				<div class="product-quantity">
-					<input type="number" min="1" name="quantity<%=i%>" id="quantity" value="<%=c.getQuantity()%>">
+					<input type="number" min="1" max = "<%=stock[i]%>"name="quantity<%=i%>" id="quantity" value="<%=c.getQuantity()%>">
 				</div>
 
 				<div class="product-removal">
-					<button class="remove-product" form="rForm">Remove</button>
+					<button class="remove-product" form="rForm<%=i%>">Remove</button>
 
-					<button class="remove-product" form="vForm">View</button>
+					<button class="remove-product" form="vForm<%=i%>">View</button>
 				</div>
 			</div>
 			<%
 			i++;
-			}			
+			}
 			%>
 			</form>				
 			<button type="submit" class="checkout" form = "dForm">Checkout</button>
 			
+			<% 
+			int j = 0;
+			for(Cart c: al){
+			%>
+					<form action="ViewCartServlet" id="vForm<%=j%>">
+					<input type="hidden" name="productNo" value="<%=c.getProductID()%>">
+					</form>
+					
+					<form action="RemoveCartServlet" id="rForm<%=j%>">
+						<input type="hidden" name="arrayNo" value="<%=c.getCount()%>">
+					</form>
 		<%
+			j++;
 			}
+		}
+	}	
+}catch(Exception e){
+	out.println(e);
+}
 		%>
 	</div>
 	<!-- /.container -->
@@ -177,12 +184,6 @@
 
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
-	<%
-    }
-    	} catch(Exception e){
-			out.println(e);
-		}
-%>
 </body>
 
 </html>

@@ -154,12 +154,12 @@
 					<p class="lead">Featured Products</p>
                 <div class="row">
 	            	<%
-						String Productsql = "SELECT p.ProductID, p.Price, p.ShortDesc,p.Desc, p.Featured, p.ImagePath, Count(r.CommentID) 'TotalReview', avg(Star) 'Star' FROM product p, review r where p.ProductID=r.ProductID AND r.Approved = 1 Group by p.ProductID";
+						String Productsql = "SELECT p.ProductID, p.Price, p.ShortDesc,p.Desc, p.Featured, p.ImagePath, Count(r.CommentID) 'TotalReview', avg(Star) 'Star', p.quantity FROM product p, review r where p.ProductID=r.ProductID AND r.Approved = 1 Group by p.ProductID";
 						ResultSet Productrs = stmt.executeQuery(Productsql);
 								
 						Float Price;
 						String shortDesc, desc, imagePath;
-						int productID, totalreview, Featured, Avg;
+						int productID, totalreview, Featured, Avg, quantity;
 								
 						while (Productrs.next()){
 							productID=Productrs.getInt("ProductID");
@@ -170,7 +170,7 @@
 							totalreview=Productrs.getInt("TotalReview");
 							Featured=Productrs.getInt("Featured");
 							Avg=Productrs.getInt("Star");
-							
+							quantity=Productrs.getInt("quantity");
 							if (Featured == 1){
 							
 					%> 
@@ -248,7 +248,10 @@
 					                   		%>
 					                   	<form action = "AddCartServlet">
 											<input type ="hidden" name = "productID" value = <%= productID %>>
+					                 		<input type ="hidden" name = "stock" value = <%= quantity %>>
+					                 		
 					                 		<input type = "submit" value = "Add To Cart"/>
+					                 		<p class="pull-right">Qty: <%=quantity%></p>
 					                 	</form>
 					                 	</p>
 					        	</div>
