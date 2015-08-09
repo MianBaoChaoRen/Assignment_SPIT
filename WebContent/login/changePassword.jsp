@@ -7,10 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
- //ChangePassword.jsp
-    <FORM ACTION="ChangePassword" METHOD="GET">
+    <form role="form" action="changePasswordServlet" METHOD="GET">
 <div id="login_box">
   <div id="login_header">
         Login
@@ -40,6 +37,8 @@
     </label>
   </div>
 </div>
+
+</form>
 
 
 </body>

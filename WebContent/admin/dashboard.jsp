@@ -140,6 +140,17 @@
                                 <li><a href="../login/logout.jsp"><i class="fa fa-angle-double-right"></i> Log Out</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>Promo Code</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="../public/generateCode.jsp"><i class="fa fa-angle-double-right"></i> Promo Code Page</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

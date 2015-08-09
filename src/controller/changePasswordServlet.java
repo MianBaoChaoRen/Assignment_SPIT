@@ -14,6 +14,8 @@ import java.sql.*;
 import javax.naming.*;
 import javax.sql.*;
 
+import model.*;
+
 /**
  * Servlet implementation class changePasswordServlet
  */
@@ -41,10 +43,10 @@ public class changePasswordServlet extends HttpServlet {
 	    Connection con =   GetConnectToDb();
 	    boolean flag = CheckLogin(Password,CPassword,Email,con);
 	    if(flag){
-	        gotoPage("/LoginPage.jsp",request,response);
+	        gotoPage("../public/index.jsp",request,response);
 	    }
 	    else{
-	        gotoPage("/ChangeError.jsp",request,response);
+	        gotoPage("../public/index.jsp",request,response);
 	    }
 	}
 	
