@@ -11,7 +11,7 @@ public class OrderDB {
 			
 			ArrayList<Order> al = new ArrayList<Order>();
 			
-			String sqlstr = "select `index`,`memberID`, `orderNum`,`orderdate`,`name`,`contact`,`email`,`address`,`creditcard`,`cardtype`,`exmonth`,`exyear`,`cvc`,`productID`,`totalprice`,`quantity`, COUNT(`orderNum`) AS `top` from `order` where orderdate between ? and ? group by `productID` ORDER by 17 DESC LIMIT 10";
+			String sqlstr = "select `index`,`memberID`, `orderid`,`orderdate`,`name`,`contact`,`email`,`address`,`creditcard`,`cardtype`,`exmonth`,`exyear`,`cvc`,`productID`,`totalprice`,`quantity`, COUNT(`orderid`) AS `top` from `ordercart` where orderdate between ? and ? group by `productID` ORDER by 17 DESC LIMIT 10";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sqlstr);
 			
