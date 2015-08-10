@@ -57,20 +57,20 @@
   	
 	%>
 	
-	
+	<% int code = (int) (Math.random() * 100000);%>
 
 
 <h2 align = "center">Display the promo code:  
 
       <FONT COLOR="RED">
-        <%= (int) (Math.random() * 100000) %>
+        <%= code %>
       </FONT>
 	</h2>
     <H4 ALIGN="CENTER">Refresh the page to see if the promo changes...</H4>
   
   
   <br>
-<input type = "submit" value = "Display Promo Code"  align="right"/>
+<input type = "submit" value = "Display Promo Code" />
 </form>
 
 </body>

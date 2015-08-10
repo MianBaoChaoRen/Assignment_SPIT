@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class promo {
 	
 	
-	private int promo_;
-	private int quantity;
+	private int promocode;
+	
 
 }
