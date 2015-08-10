@@ -49,7 +49,7 @@
         <link rel="icon" href="../ProductImg/SPFavicon.png" sizes="16x16">
 </head>
 <body class="skin-blue">
-<form action = "generateCode.jsp">
+<form action = "addgenerateCode.jsp">
 
 <%
 	//String promocode = String.session(session.getAttribute("promo_code"));
@@ -57,13 +57,16 @@
   	
 	%>
 	
-	<% int code = (int) (Math.random() * 100000);%>
+	<% int promocode = (int) (Math.random() * 100000);%>
 
 
 <h2 align = "center">Display the promo code:  
 
       <FONT COLOR="RED">
-        <%= code %>
+      <div name = "promocode">
+        <%= promocode %>
+        </div>
+        
       </FONT>
 	</h2>
     <H4 ALIGN="CENTER">Refresh the page to see if the promo changes...</H4>
@@ -72,6 +75,13 @@
   <br>
 <input type = "submit" value = "Display Promo Code" />
 </form>
+
+
+
+
+
+
+
 
 </body>
 </html>
