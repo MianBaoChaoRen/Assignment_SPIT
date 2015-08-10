@@ -51,11 +51,6 @@
 <body class="skin-blue">
 <form action = "addgenerateCode.jsp">
 
-<%
-	//String promocode = String.session(session.getAttribute("promo_code"));
-
-  	
-	%>
 	
 	<% int promocode = (int) (Math.random() * 100000);%>
 

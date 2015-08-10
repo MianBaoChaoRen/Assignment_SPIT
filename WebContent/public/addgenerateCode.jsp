@@ -3,7 +3,6 @@
     <%@page import="java.sql.*" %>
 <%@page import="java.io.*" %>
 <%@page import="javax.servlet.*"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +14,7 @@
 <%
 		try{
 			
-			int promocode=Integer.parseInt(request.getParameter("promo_code"));
+			int promocode=Integer.parseInt(request.getParameter("promocode"));
 			
 			
 			 // Step1: Load JDBC Driver
@@ -28,11 +27,11 @@
 			//Statement stmt= conn.createStatement();
 			
 			
-			String AddgenerateCodesql="Insert into promo_code (promo_code) values(?)";
+			String AddgenerateCodesql="Insert into promo_code1 (promo_code) values(?)";
    			
    			PreparedStatement AddgenerateCodepstmt=conn.prepareStatement(AddgenerateCodesql);
    			
-   			AddgenerateCodepstmt.setInt(1,Integer.parseInt("promo_code"));
+   			AddgenerateCodepstmt.setInt(1,Integer.parseInt("promocode"));
    			
 			
    			int AddgenerateCoderec=AddgenerateCodepstmt.executeUpdate();
