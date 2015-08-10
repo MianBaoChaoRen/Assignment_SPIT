@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@page import="java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,10 +19,10 @@
        			// Step 3 : Establish connection URL
        			Connection conn = DriverManager.getConnection(connURL);
        			
-       			String approve=request.getParameter("approve");
-       			String pid=request.getParameter("pid");
+       			String promocode=request.getParameter("promo_code");
+       			String promoid=request.getParameter("promo_id");
        			
-       			String approvesql="UPDATE review set Approved=1 where CommentID=?";
+       			String promocodesql="UPDATE  set Approved=1 where CommentID=?";
        			
        			PreparedStatement approvepstmt=conn.prepareStatement(approvesql);
        			

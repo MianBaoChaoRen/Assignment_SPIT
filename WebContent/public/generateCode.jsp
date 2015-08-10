@@ -52,21 +52,25 @@
 <form action = "generateCode.jsp">
 
 <%
-	String promocode = String.valueOf(session.getAttribute("promo_code"));
+	//String promocode = String.session(session.getAttribute("promo_code"));
 
-  	try{
-		
-	    if (userdetails == null){
-	    	response.sendRedirect("../public/index.jsp");
-	    }else {
+  	
 	%>
+	
+	
 
-<h2>Display the promo code: </h2>
 
+<h2 align = "center">Display the promo code:  
 
-
-<br>
-<input type = "submit" value = "Display Promo Code"/>
+      <FONT COLOR="RED">
+        <%= (int) (Math.random() * 100000) %>
+      </FONT>
+	</h2>
+    <H4 ALIGN="CENTER">Refresh the page to see if the promo changes...</H4>
+  
+  
+  <br>
+<input type = "submit" value = "Display Promo Code"  align="right"/>
 </form>
 
 </body>
