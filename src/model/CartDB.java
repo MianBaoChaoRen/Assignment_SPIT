@@ -1,6 +1,9 @@
 package model;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.*;
+import java.sql.Date;
 
 public class CartDB {
 	public ArrayList<Cart> addToCart(String id, ArrayList<Cart> al){
@@ -53,15 +56,19 @@ public class CartDB {
 				String cardtype, String exmonth, String exyear, String cvc, ArrayList<Cart> Al){
 		try{
 			Connection conn = connDB.getConnectionDB();
+			
+			
 			ArrayList<Cart> al = Al;
-				int orderID = 0;
-				int memberID = 0;
+			int orderID = 0;
+			int memberID = 0;
+			
+				
 				String orderid = "select orderid from ordercart";
 				
 				String memberid = "select memberID from member where email = ? && contact = ?";
 				
-				String sql = "insert into ordercart (orderid, memberid, name, contact, email, address, creditcard, cardtype, exmonth, exyear, cvc, productID, quantity, totalprice)" + 
-						" Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				String sql = "insert into ordercart (orderid, orderdate, memberid, name, contact, email, address, creditcard, cardtype, exmonth, exyear, cvc, productID, totalprice, quantity)" + 
+						" Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				
 				
 				
@@ -89,22 +96,27 @@ public class CartDB {
 					memberID = rs2.getInt("memberID");
 				}
 			
-				pstmt2.setInt(1, orderID);	
-				pstmt2.setInt(2, memberID);				
-				pstmt2.setString(3, name);
-				pstmt2.setString(4, contact);
-				pstmt2.setString(5, email);
-				pstmt2.setString(6, address);
-				pstmt2.setString(7, creditcard);
-				pstmt2.setString(8, cardtype);
-				pstmt2.setString(9, exmonth);
-				pstmt2.setString(10, exyear);
-				pstmt2.setString(11, cvc);
+				DateFormat df = new SimpleDateFormat("yyyy-dd-MM");
+				Calendar calobj = Calendar.getInstance();
+				String orderdate = df.format(calobj.getTime());
+				
+				pstmt2.setInt(1, orderID);
+				pstmt2.setString(2, orderdate);
+				pstmt2.setInt(3, memberID);				
+				pstmt2.setString(4, name);
+				pstmt2.setString(5, contact);
+				pstmt2.setString(6, email);
+				pstmt2.setString(7, address);
+				pstmt2.setString(8, creditcard);
+				pstmt2.setString(9, cardtype);
+				pstmt2.setString(10, exmonth);
+				pstmt2.setString(11, exyear);
+				pstmt2.setString(12, cvc);
 				
 				for(Cart c: al){
-					pstmt2.setInt(12, c.getProductID());
-					pstmt2.setInt(13, c.getQuantity());
-					pstmt2.setInt(14, c.getTotalPrice());					
+					pstmt2.setInt(13, c.getProductID());
+					pstmt2.setInt(14, c.getTotalPrice());
+					pstmt2.setInt(15, c.getQuantity());					
 					pstmt2.executeUpdate();
 				}	
 				return orderID;

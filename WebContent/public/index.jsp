@@ -256,7 +256,7 @@
 					                 		<input type = "submit" value = "Add To Cart"/>
 					                 		<p class="pull-right">Qty: <%=quantity%></p>
 					                 	</form>
-					                 	</p>
+					                 	
 					        	</div>
 				         	</div>
 				         	

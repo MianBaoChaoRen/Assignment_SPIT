@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -45,7 +48,7 @@ public class BuyCartServlet extends HttpServlet {
 		String exmonth = request.getParameter("month");
 		String exyear = request.getParameter("year");
 		String cvc = request.getParameter("cvc");
-		
+
 		String orderid = String.valueOf(db.recordCart(name, contact, email, address, creditcard, cardtype, exmonth, exyear, cvc, al));
 		db.updateStock(al);
 		session.setAttribute("orderid", orderid);

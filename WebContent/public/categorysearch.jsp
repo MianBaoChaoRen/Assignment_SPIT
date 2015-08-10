@@ -50,7 +50,9 @@
 		// Step 3 : Establish connection URL
 		Connection conn = DriverManager.getConnection(connURL);	                            	
 		Statement stmt= conn.createStatement();
+		String [] userdetails = (String []) session.getAttribute("userdetails");
 		try{
+			if (userdetails != null){
 	%>
 
     <!-- Navigation -->
@@ -69,14 +71,20 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                	<li>
-                        <a href="../login/login.html">Admin Login</a>
+                    <li>
+                        <a href="#">Welcome <%=userdetails[0] %></a>
+                    </li>
+                    <li>
+                        <a href="../public/memberprofile.jsp">Profile</a>
                     </li>
                     <li>
                         <a href="#">About</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
+                    </li>
+                    <li>
+                        <a href="../login/logout.jsp">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -112,11 +120,11 @@
                 <div class="row">
 	            	<%
 	            		String cid=request.getParameter("CategoryID");
-						String Productsql = "SELECT p.ProductID, p.Price, p.ShortDesc,p.Desc, p.Featured, p.ImagePath, Count(r.CommentID) 'TotalReview', avg(Star) 'Star' FROM product p, review r where CategoryID = '"+cid+"' AND p.ProductID=r.ProductID AND r.Approved = 1 Group by p.ProductID";
+						String Productsql = "SELECT p.ProductID, p.Price, p.ShortDesc,p.Desc, p.Featured,p.quantity, p.ImagePath, Count(r.CommentID) 'TotalReview', avg(Star) 'Star' FROM product p, review r where CategoryID = '"+cid+"' AND p.ProductID=r.ProductID AND r.Approved = 1 Group by p.ProductID";
 						ResultSet Productrs = stmt.executeQuery(Productsql);
 						
 						Float Price;
-						int productID, totalreview, Avg;
+						int productID, totalreview, Avg, quantity;
 						String shortDesc, desc, imagePath;
 								
 						while (Productrs.next()){
@@ -127,10 +135,9 @@
 							imagePath=Productrs.getString("ImagePath");
 							totalreview=Productrs.getInt("TotalReview");
 							Avg=Productrs.getInt("Star");
+							quantity=Productrs.getInt("quantity");
 					%> 
 						<div class="col-sm-4 col-lg-4 col-md-4">
-						<form action = "AddCartServlet" method = "get">
-						<input type ="hidden" name = "productID" value = <%= productID %>>
 							<div class="thumbnail">
 								<img src='<%= imagePath %>' alt="">
 									<div class="caption">
@@ -200,11 +207,15 @@
 					                			break;
 					                		}
 					                   		%>
-					                   	<input type = "submit" value = "Add To Cart"/>
-					                 	</p>
+					                   	<form action = "AddCartServlet">
+											<input type ="hidden" name = "productID" value = <%= productID %>>
+					                 		<input type ="hidden" name = "stock" value = <%= quantity %>>
+					                 		
+					                 		<input type = "submit" value = "Add To Cart"/>
+					                 		<p class="pull-right">Qty: <%=quantity%></p>
+					                 	</form>
 					        	</div>
 				         	</div>
-				         	</form>
 			         	</div>
 					<%
 						}
@@ -238,10 +249,193 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-<%																
-	conn.close();
+<%	}else{	%>
+	<!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.jsp">SP IT! TM</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="../login/login.html">Login</a>
+                    </li>
+                    <li>
+                    <a href="../login/register.html">Register</a>
+                	</li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Categories</p>
+                <div class="list-group">
+                <%
+				String Categorysql = "SELECT * FROM productcategory";
+				ResultSet Categoryrs = stmt.executeQuery(Categorysql);
+				while (Categoryrs.next()){
+					int CategoryID = Categoryrs.getInt("CategoryID");
+					String CategoryName = Categoryrs.getString("CategoryType");
+					%>
+						<a href="categorysearch.jsp?CategoryID=<%= CategoryID %>" class="list-group-item"><%= CategoryName %></a>
+					
+					<%                                  
+					}
+				%>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row">
+	            	<%
+	            		String cid=request.getParameter("CategoryID");
+						String Productsql = "SELECT p.ProductID, p.Price, p.ShortDesc,p.Desc, p.Featured, p.ImagePath, Count(r.CommentID) 'TotalReview', avg(Star) 'Star' FROM product p, review r where CategoryID = '"+cid+"' AND p.ProductID=r.ProductID AND r.Approved = 1 Group by p.ProductID";
+						ResultSet Productrs = stmt.executeQuery(Productsql);
+						
+						Float Price;
+						int productID, totalreview, Avg, quantity;
+						String shortDesc, desc, imagePath;
+								
+						while (Productrs.next()){
+							productID=Productrs.getInt("ProductID");
+							Price=Productrs.getFloat("Price");
+							shortDesc=Productrs.getString("ShortDesc");
+							desc=Productrs.getString("Desc");
+							imagePath=Productrs.getString("ImagePath");
+							totalreview=Productrs.getInt("TotalReview");
+							Avg=Productrs.getInt("Star");
+					%> 
+						<div class="col-sm-4 col-lg-4 col-md-4">
+							<div class="thumbnail">
+								<img src='<%= imagePath %>' alt="">
+									<div class="caption">
+		                             	<h4 class="pull-right">SGD $<%= Price %></h4>
+		                                	<h4><a href="productHM.jsp?ProductID=<%= productID %>"><%= shortDesc %></a></h4>
+		                                		<p><%= desc %></p>
+		                           	</div>
+		                            			
+		                       	<div class="ratings">
+					               		<p class="pull-right"><%= totalreview %> reviews</p>
+					                 	<p>
+					                   		<%
+					                   		switch (Avg){
+					                		case 1:
+					                			%>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<% 
+					                			break;
+					                		case 2:
+					                			%>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<% 
+					                			break;
+					                		case 3:
+					                			%>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<% 
+					                			break;
+					                		case 4:
+					                			%>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<% 
+					                			break;
+					                		case 5:
+					                			%>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<span class="glyphicon glyphicon-star"></span>
+					                			<% 
+					                			break;
+					                		default:
+					                			%>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<span class="glyphicon glyphicon-star-empty"></span>
+					                			<%
+					                			break;
+					                		}
+					                   		%>
+					        	</div>
+				         	</div>
+			         	</div>
+					<%
+						}
+					%>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SP IT! | TM 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+<%}
 	} catch(Exception e){
-	out.println(e);
+		out.println(e);
 	}
 %>
 </body>
