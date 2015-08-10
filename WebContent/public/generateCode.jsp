@@ -49,7 +49,7 @@
         <link rel="icon" href="../ProductImg/SPFavicon.png" sizes="16x16">
 </head>
 <body class="skin-blue">
-<form action = "addgenerateCode.jsp">
+<form action = "addgenerateCode.jsp" method = "post">
 
 	
 	<% int promocode = (int) (Math.random() * 100000);%>
@@ -58,7 +58,7 @@
 <h2 align = "center">Display the promo code:  
 
       <FONT COLOR="RED">
-      <div name = "promocode">
+      <div name = "promocode1">
         <%= promocode %>
         </div>
         
