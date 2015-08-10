@@ -81,6 +81,9 @@
                         <a href="../public/memberprofile.jsp">Profile</a>
                     </li>
                     <li>
+                        <a href="../public/checkHistory.jsp">Transaction History</a>
+                    </li>
+                    <li>
                         <a href="#">About</a>
                     </li>
                     <li>
