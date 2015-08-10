@@ -285,6 +285,15 @@
 							value="CVC/CVV" onfocus="inputFocus(this)" onblur="inputBlur(this)" />
 					</div>
 				</div>
+				
+				<div class="totals-item2">
+					<label>Promo code: </label>
+					<div class="totals-value2">
+						<input type="text" name="promocode1" id = "promocode1" style="color: #888; width: 300px;"
+							value="If you have promocode, please key in here." onfocus="inputFocus(this)" onblur="inputBlur(this)" />
+					</div>
+				</div>
+				
 				<div class="totals-item">
 					<input type = "submit" class="checkout" onclick = "return chkForm()" value = "BuyNow">
 					<button class="back" form="uForm">Update</button>

@@ -88,7 +88,7 @@
 		<!-- /.container -->
 	</nav>
 	<%String orderid = String.valueOf(session.getAttribute("orderid"));%>
-	<h1>Summary</h1>
+
 	<h2>Transaction <%=orderid %></h2>
 
 	<div class="shopping-cart">

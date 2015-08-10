@@ -1,19 +1,21 @@
 package model;
 
 public class promocodeDB {
-	private int promocode;
+	private int keypromocode;
 
-	public promocodeDB(int promocode) {
+	public promocodeDB(int keypromocode) {
 		super();
-		this.promocode = promocode;
+		this.keypromocode = keypromocode;
 	}
 
-	public int getPromocode() {
-		return promocode;
+	public int getKeypromocode() {
+		return keypromocode;
 	}
 
-	public void setPromocode(int promocode) {
-		this.promocode = promocode;
+	public void setKeypromocode(int keypromocode) {
+		this.keypromocode = keypromocode;
 	}
+
+
 
 }

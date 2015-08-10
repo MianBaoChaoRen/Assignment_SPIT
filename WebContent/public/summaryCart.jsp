@@ -50,6 +50,7 @@
 	<%
 	String [] userdetails = (String []) session.getAttribute("userdetails");
 	String creditcard = String.valueOf(session.getAttribute("creditcard"));
+	//int promocode = (Integer) session.getAttribute("promocode");
 	creditcard = (creditcard.substring(0, 4) + "************" + (creditcard.substring(12, 16)));
 	
   	try{
@@ -195,6 +196,8 @@
 					<%=creditcard %>
 				</div>
 			</div>
+			
+			
 
 			<button class="back" form="doneForm">Done</button>
 		
